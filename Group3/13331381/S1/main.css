@@ -1,29 +1,44 @@
 /* utf-8 */
 html, body {
-	margin: 0;
+    margin: 0;
 }
 * {
-	margin: 0;
-	padding: 0;
+    margin: 0;
+    padding: 0;
 }
 ul li {
-	list-style-type: none;
+    list-style-type: none;
 }
 
 /* at-plus-container
  *
  **********************************/
 div#at-plus-container {
-	margin: auto auto;
-	width: 32px;
-	height: 32px;
-	position: relative;
-	margin-top: 500px;
+    margin: auto auto;
+    width: 32px;
+    height: 32px;
+    position: relative;
 }
 
 /* bottom-positioner
  *
  *************************************/
+div#bottom-positioner {
+    width: 32px;
+    height: 32px;
+    position: relative;
+    margin-top: 700%;
+    margin-left: -160px;
+    transition: all 0.5s ease-in-out 0s;
+    -moz-transition: all 0.5s ease-in-out 0s;
+    -webkit-transition: all 0.5s ease-in-out 0s;
+    -o-transition: all 0.5s ease-in-out 0s;
+}
+
+div#at-plus-container:hover div#bottom-positioner {
+	width: 250px;
+	height: 250px;
+}
 
 /* info-bar
  *
@@ -33,38 +48,56 @@ div#at-plus-container {
 	width: 32px;
 	height: 32px;
 	border-radius: 50%;
-	opacity: 0;
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	transition: all 0.5s ease-in-out 0s;
-	-moz-transition: all 0.5s ease-in-out 0s;
-	-webkit-transition: all 0.5s ease-in-out 0s;
-	-o-transition: all 0.5s ease-in-out 0s;
+    opacity: 0;
+    position: absolute;
+    top: 150px;
+    left: 150px;
+    transition: all 0.5s ease-in-out 0s;
+    -moz-transition: all 0.5s ease-in-out 0s;
+    -webkit-transition: all 0.5s ease-in-out 0s;
+    -o-transition: all 0.5s ease-in-out 0s;
 }
 
-#answer {
+div#bottom-positioner:hover #info-bar {
+    height: 140px;
+    width: 140px;
+    border-radius: 50%;
+    background-color: rgb(150,150,150);     /* color transition */
+    position: absolute;
+    top: -13px;
+    left: 97px;
+    opacity: 1;
+    transition: all 0.5s ease-in-out 0s;
+    -moz-transition: all 0.5s ease-in-out 0s;
+    -webkit-transition: all 0.5s ease-in-out 0s;
+    -o-transition: all 0.5s ease-in-out 0s;
+}
+
+span#answer {
 	display: none;
-	width: 80px;
-	height: 80px;
-	color: green;
-	font-weight: bold;
-	font-size: 3em;
-	margin: 25px 0px 0px 45px;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+	width: 32px;
+	height: 32px;
+    color: green;
+    font-weight: bold;
+    font-size:  3.0em;
+    transition: all 0.5s ease-in-out 0s;
+    -moz-transition: all 0.5s ease-in-out 0s;
+    -webkit-transition: all 0.5s ease-in-out 0s;
+    -o-transition: all 0.5s ease-in-out 0s;
 }
 
-div#at-plus-container:hover #info-bar {
-	height: 140px;
-	width: 140px;
-	background-color: rgb(150,150,150);		/* color transition */
-	position: absolute;
-	top: -165px;
-	left: -55px;
-	opacity: 1;
-	transition: all 0.5s ease-in-out 0s;
-	-moz-transition: all 0.5s ease-in-out 0s;
-	-webkit-transition: all 0.5s ease-in-out 0s;
-	-o-transition: all 0.5s ease-in-out 0s;
+div#bottom-positioner:hover span#answer {
+    width: 64px;
+    height: 64px;
+    left: 45px;
+    top: 30px;
+    transition: all 0.5s ease-in-out 0s;
+    -moz-transition: all 0.5s ease-in-out 0s;
+    -webkit-transition: all 0.5s ease-in-out 0s;
+    -o-transition: all 0.5s ease-in-out 0s;
 }
 
 /* control-ring-container
@@ -72,105 +105,104 @@ div#at-plus-container:hover #info-bar {
  **************************************/
 
 div#control-ring-container ul > li {
-	width: 36px;
-	height: 36px;
-	border-radius: 50%;
-	background-color: rgb(125,125,125);
-	margin: 10px 10px;
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	opacity: 0;
-	transition: all 0.3s ease-in-out 0s;
-	-moz-transition: all 0.3s ease-in-out 0s;
-	-webkit-transition: all 0.3s ease-in-out 0s;
-	-o-transition: all 0.3s ease-in-out 0s;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    margin: 10px 10px;
+    position: absolute;
+    top: 150px;
+    left: 150px;
+    opacity: 0;
+    transition: all 0.3s ease-in-out 0s;
+    -moz-transition: all 0.3s ease-in-out 0s;
+    -webkit-transition: all 0.3s ease-in-out 0s;
+    -o-transition: all 0.3s ease-in-out 0s;
 }
 
 .name {
-	display: block;
-	color: #3CB371;
-	font-size: 18px;
-	font-weight: bold;
-	margin-top: 8px;
-	margin-left: 12px;
+    display: block;
+    color: #3CB371;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-top: 3px;
+    margin-left: 10px;
 }
 
 ul#control-ring li:hover {
-	cursor: pointer;
+    cursor: pointer;
 }
 
-div#at-plus-container:hover li[class="A button"] {
-	background-color: rgba(48, 63, 159, 1);
-	position: absolute;
-	top: -50px;
-	left: -80px;
-	opacity: 1;
-	transition: all 0.5s ease-in-out 0s;
-	-moz-transition: all 0.5s ease-in-out 0s;
-	-webkit-transition: all 0.5s ease-in-out 0s;
-	-o-transition: all 0.5s ease-in-out 0s;
+div#bottom-positioner:hover li[class="A button"] {
+    background-color: rgba(48, 63, 159, 1);
+    position: absolute;
+    top: 95px;
+    left: 66px;
+    opacity: 1;
+    transition: all 0.5s ease-in-out 0s;
+    -moz-transition: all 0.5s ease-in-out 0s;
+    -webkit-transition: all 0.5s ease-in-out 0s;
+    -o-transition: all 0.5s ease-in-out 0s;
 }
 
-div#at-plus-container:hover li[class="B button"] {
-	background-color: rgba(48, 63, 159, 1);
-	position: absolute;
-	top: -5px;
-	left: -95px;
-	opacity: 1;
-	transition: all 0.5s ease-in-out 0s;
-	-moz-transition: all 0.5s ease-in-out 0s;
-	-webkit-transition: all 0.5s ease-in-out 0s;
-	-o-transition: all 0.5s ease-in-out 0s;
+div#bottom-positioner:hover li[class="B button"] {
+    background-color: rgba(48, 63, 159, 1);
+    position: absolute;
+    top: 138px;
+    left: 51px;
+    opacity: 1;
+    transition: all 0.5s ease-in-out 0s;
+    -moz-transition: all 0.5s ease-in-out 0s;
+    -webkit-transition: all 0.5s ease-in-out 0s;
+    -o-transition: all 0.5s ease-in-out 0s;
 }
 
-div#at-plus-container:hover li[class="C button"] {
-	background-color: rgba(48, 63, 159, 1);
-	position: absolute;
-	top: 38px;
-	left: -77px;
-	opacity: 1;
-	transition: all 0.5s ease-in-out 0s;
-	-moz-transition: all 0.5s ease-in-out 0s;
-	-webkit-transition: all 0.5s ease-in-out 0s;
-	-o-transition: all 0.5s ease-in-out 0s;
+div#bottom-positioner:hover li[class="C button"] {
+    background-color: rgba(48, 63, 159, 1);
+    position: absolute;
+    top: 181px;
+    left: 70px;
+    opacity: 1;
+    transition: all 0.5s ease-in-out 0s;
+    -moz-transition: all 0.5s ease-in-out 0s;
+    -webkit-transition: all 0.5s ease-in-out 0s;
+    -o-transition: all 0.5s ease-in-out 0s;
 }
 
-div#at-plus-container:hover li[class="D button"] {
-	background-color: rgba(48, 63, 159, 1);
-	position: absolute;
-	top: 60px;
-	left: -35px;
-	opacity: 1;
-	transition: all 0.5s ease-in-out 0s;
-	-moz-transition: all 0.5s ease-in-out 0s;
-	-webkit-transition: all 0.5s ease-in-out 0s;
-	-o-transition: all 0.5s ease-in-out 0s;
+div#bottom-positioner:hover li[class="D button"] {
+    background-color: rgba(48, 63, 159, 1);
+    position: absolute;
+    top: 203px;
+    left: 109px;
+    opacity: 1;
+    transition: all 0.5s ease-in-out 0s;
+    -moz-transition: all 0.5s ease-in-out 0s;
+    -webkit-transition: all 0.5s ease-in-out 0s;
+    -o-transition: all 0.5s ease-in-out 0s;
 }
 
-div#at-plus-container:hover li[class="E button"] {
-	background-color: rgba(48, 63, 159, 1);
-	position: absolute;
-	top: 50px;
-	left: 17px;
-	opacity: 1;
-	transition: all 0.5s ease-in-out 0s;
-	-moz-transition: all 0.5s ease-in-out 0s;
-	-webkit-transition: all 0.5s ease-in-out 0s;
-	-o-transition: all 0.5s ease-in-out 0s;
+div#bottom-positioner:hover li[class="E button"] {
+    background-color: rgba(48, 63, 159, 1);
+    position: absolute;
+    top: 200px;
+    left: 159px;
+    opacity: 1;
+    transition: all 0.5s ease-in-out 0s;
+    -moz-transition: all 0.5s ease-in-out 0s;
+    -webkit-transition: all 0.5s ease-in-out 0s;
+    -o-transition: all 0.5s ease-in-out 0s;
 }
 
 span.number {
-	display: none;	/* block; */
-	width: 22px;
-	height: 22px;
-	border-radius: 50%;
-	background-color: rgb(255,0,0);
-	margin-left: 26px;
-	margin-top: -35px;
-	text-align: center;
-	color: rgb(255,255,255);
-	font-weight: bold;
+    display: none;  /* block; */
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background-color: rgb(255,0,0);
+    margin-left: 26px;
+    margin-top: -35px;
+    text-align: center;
+    color: rgb(255,255,255);
+    font-weight: bold;
 }
 
 
@@ -178,43 +210,47 @@ span.number {
  *
  ************************************/
 div.apb {
-	transition: all 0.5s ease-in-out 0s;
-	-moz-transition: all 0.5s ease-in-out 0s;
-	-webkit-transition: all 0.5s ease-in-out 0s;
-	-o-transition: all 0.5s ease-in-out 0s;
+    width:32px;
+    height:32px;
+    position: absolute;
+    left: 150px;
+    top: 150px;
+    transition: all 0.5s ease-in-out 0s;
+    -moz-transition: all 0.5s ease-in-out 0s;
+    -webkit-transition: all 0.5s ease-in-out 0s;
+    -o-transition: all 0.5s ease-in-out 0s;
 
-	transition-delay: 0.2s;
-	-moz-transition-delay: 0.2s; /* Firefox 4 */
-	-webkit-transition-delay: 0.2s; /* Safari 和 Chrome */
-	-o-transition-delay: 0.2s; /* Opera */
+    transition-delay: 0.2s;
+    -moz-transition-delay: 0.2s; /* Firefox 4 */
+    -webkit-transition-delay: 0.2s; /* Safari 和 Chrome */
+    -o-transition-delay: 0.2s; /* Opera */
 }
 
-div#at-plus-container:hover div.apb {
-	transform: scale(2, 2);
-	-ms-transform: scale(2,2);
-	-webkit-transform: scale(2,2);
-	-o-transform: scale(2,2);
-	-moz-transform: scale(2,2);
+div#bottom-positioner:hover div.apb {
+    transform: scale(2, 2);
+    -ms-transform: scale(2,2);
+    -webkit-transform: scale(2,2);
+    -o-transform: scale(2,2);
+    -moz-transform: scale(2,2);
 
-	transition: all 0.5s ease-in-out 0s;
-	-moz-transition: all 0.5s ease-in-out 0s;
-	-webkit-transition: all 0.5s ease-in-out 0s;
-	-o-transition: all 0.5s ease-in-out 0s;
-
+    transition: all 0.5s ease-in-out 0s;
+    -moz-transition: all 0.5s ease-in-out 0s;
+    -webkit-transition: all 0.5s ease-in-out 0s;
+    -o-transition: all 0.5s ease-in-out 0s;
 }
 
 div.icon {
-	width:32px;
-	height:32px;
-	border-radius: 50%;
-	background-color: rgb(150,150,150);
-	background-image: url("images/atplus_white.png");
-	background-repeat: no-repeat;
-	background-position: center;
+    width:32px;
+    height:32px;
+    border-radius: 50%;
+    background-color: rgb(150,150,150);
+    background-image: url("images/atplus_white.png");
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
-div#at-plus-container:hover div.icon {
-	background-color: rgba(48, 63, 159, 1);
-	background-image: url("images/atplus_green.png");
-	background-size: 25px 18px;
+div#bottom-positioner:hover div.icon {
+    background-color: rgba(48, 63, 159, 1);
+    background-image: url("images/atplus_green.png");
+    background-size: 25px 18px;
 }
