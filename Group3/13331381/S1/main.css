@@ -13,13 +13,11 @@ ul li {
 /* at-plus-container
  *
  **********************************/
-div#at-plus-container {
+#at-plus-container {
     margin: auto auto;
-    width: 32px;
-    height: 32px;
-    position: relative;
+    width: 250px;
+    height: 250px;
 }
-
 /* bottom-positioner
  *
  *************************************/
@@ -27,15 +25,16 @@ div#bottom-positioner {
     width: 32px;
     height: 32px;
     position: relative;
-    margin-top: 700%;
-    margin-left: -160px;
-    transition: all 0.5s ease-in-out 0s;
-    -moz-transition: all 0.5s ease-in-out 0s;
-    -webkit-transition: all 0.5s ease-in-out 0s;
-    -o-transition: all 0.5s ease-in-out 0s;
+    margin-top: 150%;
+    margin-left: -20%;
+    transition: all 0s;
+    -moz-transition: all 0s;
+    -webkit-transition: all 0s;
+    -o-transition: all 0s;
 }
 
-div#at-plus-container:hover div#bottom-positioner {
+/* div#at-plus-container:hover */
+div#bottom-positioner:hover {
 	width: 250px;
 	height: 250px;
 }

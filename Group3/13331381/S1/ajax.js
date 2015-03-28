@@ -1,7 +1,18 @@
 window.onload = function () {
     reset();
     var container = document.getElementById("bottom-positioner");
-    container.addEventListener("mouseout", reset, false);
+    container.onmouseout = function(e) {    // deal with the bug of onmouseout
+        if (!e) {
+            e = window.event;
+        }
+        var reltg = e.relatedTarget ? e.relatedTarget : e.toElement;
+        while (reltg && reltg != this) {
+            reltg = reltg.parentNode;
+        }
+        if (reltg != this) {
+            reset();
+        }
+    }
 }
 
 var reset = function () {
@@ -117,7 +128,7 @@ function count_answer() {
                     ans.innerHTML = s.toString();
                     info_bar.onclick = function() {};
                 };
-            }(ans, s, info_bar);
+            }(ans, sum, info_bar);
         }
     }
 }
