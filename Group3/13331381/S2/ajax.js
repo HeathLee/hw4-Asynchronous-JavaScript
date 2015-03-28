@@ -21,7 +21,7 @@ var reset = function () {
     var ans = document.getElementById("answer");
     var info_bar = document.getElementById("info-bar");
 
-    info_bar.onclick = function() {};
+    info_bar.status = "unactive";
     ans.style.display = "none";
     ans.innerHTML = "";
     var l = numbers.length;
@@ -36,13 +36,17 @@ var reset = function () {
 function listener(bts) {
     var l = bts.length;
     for (var i = 0; i < l; i = i + 1) {
-        bts[i].onclick = function (index) {
+        bts[i].status = "active";
+        bts[i].onclick = function (index, cur) {
             return function() {
-                clearEventListeners(index);
-                setNoActiveCssStyle(index);
-                ajax_require(index);
+                if (cur.status == "active") {
+                    cur.status = "unactive";
+                    clearEventListeners(index);
+                    setNoActiveCssStyle(index);
+                    ajax_require(index);
+                }
             }
-        }(i);
+        }(i, bts[i]);
     }
 }
 
@@ -51,7 +55,7 @@ var clearEventListeners = function (i) {
     var l = bts.length;
     for (var j = 0; j < l; j = j + 1) {
         if (j != i) {
-            bts[j].onclick = function() {};
+            bts[j].status = "unactive";     // set other button unactive
         }
     }
 }
@@ -93,16 +97,9 @@ var reActiveEventListeners = function (i) {
     for (var j = 0; j < numbers.length; j = j + 1) {    // set button css style
         if (j == i) {
             numbers[j].parentNode.style.background = "rgb(150,150,150)";
-            bts[j].onclick = function(){};
         } else if (numbers[j].innerHTML == "...") {
             numbers[j].parentNode.style.background = "rgba(48, 63, 159, 1)";
-            bts[j].onclick = function (index) {
-                return function() {
-                    clearEventListeners(index);
-                    setNoActiveCssStyle(index);
-                    ajax_require(index);
-                };
-            }(j);
+            bts[j].status = "active";
         }
     }
 }
@@ -122,11 +119,13 @@ function count_answer() {
         }
         if (count == l) {
             var info_bar = document.getElementById("info-bar");
-            info_bar.onclick = function(ans, s, info_bar) {
+            info_bar.onclick = function(ans, s, ib) {
                 return function() {
-                    ans.style.display = "block";
-                    ans.innerHTML = s.toString();
-                    info_bar.onclick = function() {};
+                    if (ib.status == "unactive") {
+                        ib.status = "active";
+                        ans.style.display = "block";
+                        ans.innerHTML = s.toString();
+                    }
                 };
             }(ans, sum, info_bar);
         }
