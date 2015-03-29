@@ -15,6 +15,8 @@ window.onload = function () {
     }
 }
 
+is_auto_click = false;
+
 var reset = function () {
     var bts = document.getElementsByClassName("button");
     var numbers = document.getElementsByClassName("number");
@@ -35,6 +37,15 @@ var reset = function () {
     info_bar.onclick = null;
     var answer = document.getElementById("answer");
     answer.style.display = "none";
+
+    is_auto_click = false;
+    var icon = document.getElementsByClassName("icon")[0];
+    icon.onclick = function(icon) {
+        return function() {
+            icon.onclick = null;
+            auto_click();
+        };
+    }(icon);
 };
 
 var clearEventListeners = function (i, bts) {
@@ -44,10 +55,10 @@ var clearEventListeners = function (i, bts) {
     }
 };
 
-var activeEventListers = function (i, bts) {
+var activeEventListers = function (bts, numbers) {
     var l = bts.length;
-    for (var j in bts) {
-        if (j != i) {
+    for (var j = 0; j < l; j = j + 1) {
+        if (numbers[j].innerHTML == "...") {
             bts[j].onclick = function (index, bts) {
                 return function() {
                     bts[index].onclick = null;
@@ -97,9 +108,9 @@ var ajax_require = function (i, bts) {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 var numbers = document.getElementsByClassName("number");
                 numbers[index].innerHTML = xmlhttp.responseText;
-                activeEventListers(index, bts);
+                activeEventListers(bts, numbers);
                 setActiveCssStyle();
-                determineIfShouldShowAnswer();
+                determineIfShouldShowAnswer(index, numbers, bts);
             }
         }
     }(i, bts, xmlhttp);
@@ -107,10 +118,9 @@ var ajax_require = function (i, bts) {
     xmlhttp.send();
 };
 
-var determineIfShouldShowAnswer = function () {
+var determineIfShouldShowAnswer = function (index, numbers, bts) {
     var OK = true;
     var sum = 0;
-    var numbers = document.getElementsByClassName("number");
     for (var j = 0; j < numbers.length; j = j + 1) {
         if (numbers[j].innerHTML == "...") {
             OK = false;
@@ -120,14 +130,30 @@ var determineIfShouldShowAnswer = function () {
         }
     }
     if (OK) {
-        var info_bar = document.getElementById("info-bar");
-        info_bar.onclick = function (s, info_bar) {
-            return function () {
-                info_bar.onclick = null;
-                var answer = document.getElementById("answer");
-                answer.innerHTML = "" + s;
-                answer.style.display = "block";
-            };
-        }(sum, info_bar);
+        if (!is_auto_click) {
+            var info_bar = document.getElementById("info-bar");
+            info_bar.onclick = function (s, info_bar) {
+                return function () {
+                    info_bar.onclick = null;
+                    var answer = document.getElementById("answer");
+                    answer.innerHTML = "" + s;
+                    answer.style.display = "block";
+                };
+            }(sum, info_bar);
+        } else {
+            var answer = document.getElementById("answer");
+            answer.innerHTML = "" + sum;
+            answer.style.display = "block";
+        }
+    } else if (is_auto_click) {
+        if (index + 1 < bts.length) {
+            bts[index+1].click();
+        }
     }
+}
+
+var auto_click = function() {
+    is_auto_click = true;
+    var bts = document.getElementsByClassName("button");
+    bts[0].click();
 }
