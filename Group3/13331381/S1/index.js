@@ -21,7 +21,7 @@ var reset = function () {
     var ans = document.getElementById("answer");
     var info_bar = document.getElementById("info-bar");
 
-    info_bar.status = "unactive";
+    info_bar.onclick = null;
     ans.style.display = "none";
     ans.innerHTML = "";
     var l = numbers.length;
@@ -36,15 +36,12 @@ var reset = function () {
 function listener(bts) {
     var l = bts.length;
     for (var i = 0; i < l; i = i + 1) {
-        bts[i].status = "active";
         bts[i].onclick = function (index, cur) {
             return function() {
-                if (cur.status == "active") {
-                    cur.status = "unactive";
-                    clearEventListeners(index);
-                    setNoActiveCssStyle(index);
-                    ajax_require(index);
-                }
+                cur.onclick = null;             // clear itself function
+                clearEventListeners(index);     // clear other button function
+                setNoActiveCssStyle(index);     // set other button css style
+                ajax_require(index);            // ajax require
             }
         }(i, bts[i]);
     }
@@ -55,7 +52,7 @@ var clearEventListeners = function (i) {
     var l = bts.length;
     for (var j = 0; j < l; j = j + 1) {
         if (j != i) {
-            bts[j].status = "unactive";     // set other button unactive
+            bts[j].onclick = null;  // set other button unactive
         }
     }
 }
@@ -63,7 +60,7 @@ var clearEventListeners = function (i) {
 var setNoActiveCssStyle = function (i) {
     var numbers = document.getElementsByClassName("number");
     var l = numbers.length;
-    numbers[i].style.display = "block";     // show waiting number
+    numbers[i].style.display = "block";     // show waiting number status
     for (var j = 0; j < l; j = j + 1) {
         if (j != i && numbers[j].innerHTML == "...") {
             numbers[j].parentNode.style.background = "rgb(150,150,150)";
@@ -78,8 +75,8 @@ var ajax_require = function (i) {
     } else {
         xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
     }
-    xmlhttp.onreadystatechange = function() {
-        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {     // get number successfully
+    xmlhttp.onreadystatechange = function() {     // get number successfully
+        if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
             var numbers = document.getElementsByClassName("number");
             numbers[i].innerHTML = xmlhttp.responseText;
             reActiveEventListeners(i);
@@ -99,7 +96,14 @@ var reActiveEventListeners = function (i) {
             numbers[j].parentNode.style.background = "rgb(150,150,150)";
         } else if (numbers[j].innerHTML == "...") {
             numbers[j].parentNode.style.background = "rgba(48, 63, 159, 1)";
-            bts[j].status = "active";
+            bts[j].onclick = function (index, cur) {    // reset onclick function
+                return function () {
+                    cur.onclick = null;
+                    clearEventListeners(index);
+                    setNoActiveCssStyle(index);
+                    ajax_require(index);
+                }
+            }(j, bts[j]);
         }
     }
 }
@@ -121,11 +125,9 @@ function count_answer() {
             var info_bar = document.getElementById("info-bar");
             info_bar.onclick = function(ans, s, ib) {
                 return function() {
-                    if (ib.status == "unactive") {
-                        ib.status = "active";
-                        ans.style.display = "block";
-                        ans.innerHTML = s.toString();
-                    }
+                    ib.onclick = null;
+                    ans.style.display = "block";
+                    ans.innerHTML = s.toString();
                 };
             }(ans, sum, info_bar);
         }
