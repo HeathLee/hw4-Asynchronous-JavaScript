@@ -15,7 +15,9 @@ window.onload = function () {
     }
 }
 
-is_auto_click = false;
+var is_auto_click = false;
+var order = [];
+var click_times = 0;
 
 var reset = function () {
     var bts = document.getElementsByClassName("button");
@@ -39,6 +41,10 @@ var reset = function () {
     answer.style.display = "none";
 
     is_auto_click = false;
+    click_times = 0;
+    order = [];
+    var orders = document.getElementById("order");
+    orders.style.display = "none";
     var icon = document.getElementsByClassName("icon")[0];
     icon.onclick = function(icon) {
         return function() {
@@ -146,14 +152,48 @@ var determineIfShouldShowAnswer = function (index, numbers, bts) {
             answer.style.display = "block";
         }
     } else if (is_auto_click) {
-        if (index + 1 < bts.length) {
-            bts[index+1].click();
+        if (click_times < bts.length) {
+            bts[order[click_times]].click();
+            click_times = click_times + 1;
         }
     }
 }
 
 var auto_click = function() {
     is_auto_click = true;
+    click_times = 1;
+    // order = order_create();
+    var orders = document.getElementById("order");
+    orders.innerHTML = order_create();
+    orders.style.display = "block";
     var bts = document.getElementsByClassName("button");
-    bts[0].click();
+    bts[order[click_times - 1]].click();
+}
+
+var order_create = function() {
+    var s = "";
+    var names = document.getElementsByClassName("name");
+    var bts = document.getElementsByClassName("button");
+    var l = bts.length;
+    // var order = [];
+    while (order.length < l) {
+        var OK = true;
+        var num = parseInt(Math.random() * 100) % l;
+        for (var j = 0; j < order.length; j = j + 1) {
+            if (num == order[j]) {
+                OK = false;
+                break;
+            }
+        }
+        if (OK) {
+            if (s == "") {
+                s += names[num].innerHTML;
+            } else {
+                s += ", " + names[num].innerHTML;
+            }
+            order.push(num);
+        }
+    }
+    // return order;
+    return s;
 }
