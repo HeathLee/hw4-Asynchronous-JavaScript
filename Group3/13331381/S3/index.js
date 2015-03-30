@@ -1,5 +1,5 @@
 window.onload = function () {
-    reset();
+    reset(false, function(){});
     var container = document.getElementById("bottom-positioner");
     container.onmouseout = function(e) {    // deal with the bug of onmouseout
         if (!e) {
@@ -10,46 +10,48 @@ window.onload = function () {
             reltg = reltg.parentNode;
         }
         if (reltg != this) {
-            reset();
+            reset(false, function(){});
         }
     }
 }
 
 is_auto_click = false;
 
-var reset = function () {
+var reset = function (auto, callback) {
     var bts = document.getElementsByClassName("button");
     var numbers = document.getElementsByClassName("number");
     for (var i = 0; i < bts.length; i = i + 1) {
         numbers[i].style.display = "none";
         numbers[i].innerHTML = "...";
         bts[i].style.background = "rgba(48, 63, 159, 1)";
-        bts[i].onclick = function (index, bts, numbers) {
+        bts[i].onclick = function (index, bts, numbers, auto) {
             return function() {
                 bts[index].onclick = null;
-                if (!is_auto_click) {
+                if (!auto) {
                     clearEventListeners(index, bts);
                     setNoActiveCssStyle(index);
                 } else {
                     numbers[index].style.display = "block";
                 }
-                ajax_require(index, bts);
+                ajax_require(index, bts, auto);
             };
-        }(i, bts, numbers);
+        }(i, bts, numbers, auto);
     }
     var info_bar = document.getElementById("info-bar");
     info_bar.onclick = null;
     var answer = document.getElementById("answer");
     answer.style.display = "none";
-
-    is_auto_click = false;
-    var icon = document.getElementsByClassName("icon")[0];
-    icon.onclick = function(icon) {
-        return function() {
-            icon.onclick = null;
-            auto_click();
-        };
-    }(icon);
+    if (!auto) {                        // reset 
+        is_auto_click = false;
+        var icon = document.getElementsByClassName("icon")[0];
+        icon.onclick = function(icon) {
+            return function() {
+                icon.onclick = null;
+                auto_click();
+            };
+        }(icon);
+    }
+    callback();
 };
 
 var clearEventListeners = function (i, bts) {
@@ -72,7 +74,7 @@ var activeEventListers = function (bts, numbers) {
                     } else {
                         numbers[index].style.display = "block";
                     }
-                    ajax_require(index, bts);
+                    ajax_require(index, bts, false);
                 };
             }(j, bts, numbers);
         }
@@ -104,29 +106,28 @@ var setNoActiveCssStyle = function (i) {
     }
 };
 
-var ajax_require = function (i, bts) {
+var ajax_require = function (i, bts, auto) {
     var xmlhttp;
     if (window.XMLHttpRequest) {
         xmlhttp = new XMLHttpRequest();
     } else {
         xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
     }
-    xmlhttp.onreadystatechange = function(index, bts, xmlhttp) {
+    xmlhttp.onreadystatechange = function(index, bts, xmlhttp, auto) {
         return function() {     // get number successfully
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
                 var numbers = document.getElementsByClassName("number");
                 numbers[index].innerHTML = xmlhttp.responseText;
-                if (!is_auto_click) {
+                if (!auto) {
                     activeEventListers(bts, numbers);
                     setActiveCssStyle();
                 } else {
-                    var numbers = document.getElementsByClassName("number");
                     numbers[index].parentNode.style.background = "rgb(150,150,150)";
                 }
                 determineIfShouldShowAnswer(index, numbers, bts);
             }
         }
-    }(i, bts, xmlhttp);
+    }(i, bts, xmlhttp, auto);
     xmlhttp.open("GET", "./", true);
     xmlhttp.send();
 };
@@ -163,8 +164,11 @@ var determineIfShouldShowAnswer = function (index, numbers, bts) {
 
 var auto_click = function() {
     is_auto_click = true;
-    var bts = document.getElementsByClassName("button");
-    for (var j = 0; j < bts.length; j = j + 1) {
-        bts[j].click();
-    }
+    reset(true, function() {
+        var numbers = document.getElementsByClassName("number");
+        var bts = document.getElementsByClassName("button");
+        for (var j = 0; j < bts.length; j = j + 1) {
+            bts[j].click();
+        }
+    });
 }
